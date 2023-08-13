@@ -1,0 +1,87 @@
+.container-nav-bar {
+    position: fixed;
+    top: 0;
+    display: flex;
+    z-index: 2;
+    gap: 50px;
+    width: 100vw;
+    padding: 15px;
+    background-color: #AB231B;
+}
+.tituloContainer {
+    width: 50%;
+}
+
+.Titulo {
+    text-align: center;
+    color:  yellow;
+    cursor:no-drop;
+}
+
+.containerInput {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.Input {
+    border: 2px solid yellow;
+    border-radius: 5000px;
+    caret-color: #ffffff;
+    color: #ffffff;
+    font: inherit;
+    max-width: 55%;
+    padding-left: 2.5rem;
+    margin-right: 1rem;
+    background-color: transparent;
+}
+
+.Input::placeholder{
+    color: yellow;
+}
+
+.Input:focus{
+    outline: none;
+}
+
+.btnBuscar {
+    padding: 10px;
+    background-color: transparent;
+    border: 2px solid yellow;
+    border-radius: 10px;
+    color: yellow;
+    font-size: 15px;
+    cursor: pointer;
+    width: 100px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.btnBuscar:hover {
+    background-color: #000000;
+}
+
+
+@media (max-width: 768px) {
+    .container-nav-bar {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .tituloContainer {
+        width: 100%;
+    }
+
+    .Input {
+        max-width: 100%;
+        padding: 10px;
+        margin: 0;
+        font-size: 14px;
+        margin-right: 15px;
+    }
+
+    .btnBuscar {
+        width: 20%;
+    }
+}

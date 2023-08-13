@@ -1,0 +1,145 @@
+*{
+    padding: 0%;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.centrar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #AB231B;
+    max-width: 100%;
+    height: 100%;
+}
+
+.Main {
+    max-width: 100vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    margin-top: 80px;
+}
+
+.card {
+    background-color: #F73228;
+    width: 280px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+
+.card:hover {
+    transform: translateY(-7px);
+    z-index: 1;
+}
+
+img {
+    width: 150px; /* Cambia el tamaño según lo necesites */
+    height: auto;
+}
+
+.Nombre {
+    font-weight: bold;
+    font-size: large;
+    text-align: center;
+    color: #ffffff;
+}
+
+.footer {
+    display: flex;
+    gap: 20px;
+}
+
+.HP {
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.Ataque {
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.btnContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.BtnMas {
+    padding: 10px;
+    border: 2px solid yellow;
+    background-color: transparent;
+    color: yellow;
+    border-radius: 10px;
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+}
+
+.btnVerMas {
+    padding: 5px;
+    border: 2px solid yellow;
+    background-color: transparent;
+    color: yellow;
+    margin-top: 5px;
+    font-size: 17px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.sinResultado{
+    color: #ffffff;
+    font-size:large;
+    font-weight: bolder;
+}
+
+@media (max-width: 768px) {
+    .Main {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        max-width: 100%;
+        margin-top: 150px;
+    }
+
+    .card {
+        width: 200px;
+        padding: 10px;
+    }
+
+    img {
+        width: 100px;
+    }
+
+    .Nombre {
+        font-size: medium;
+    }
+
+    .footer {
+        gap: 10px;
+    }
+
+    .HP,
+    .Ataque {
+        font-size: 16px;
+    }
+
+    .BtnMas {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
