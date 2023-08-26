@@ -4,29 +4,28 @@ import '../css/EstilosListaPokemon.css'
 import Modal from "./Modal";
 
 const ListaPokemon = ({ buscarPoke }) => {
-
   const [PokemonUrl, setPokemonUrls] = useState([])
+  const [OriginalPokemonList, setOriginalPokemonList] = useState([])
   const [ListaPokemon, setListaPokemon] = useState([])
-  const [Cargando, setCargando] = useState(false)
+  const [ListFiltrada, setLisFiltrada] = useState([])
+  const [Cargando, setCargando] = useState(null)
   const [pagina, setPagina] = useState(0)
   const [IdPokemon, setIdPokemon] = useState([])
   const [obj, setObj] = useState(false)
 
   useEffect(() => {
     const FetchData = async () => {
-
       try {
-        const URLS = await ObtenerUrlPokemon(pagina)
-        setPokemonUrls(URLS)
+        const URLS = await ObtenerUrlPokemon(pagina);
+        setPokemonUrls(URLS);
       } catch (error) {
-        alert(error)
+        alert(error);
       }
     }
-    FetchData()
-  }, [pagina])
+    FetchData();
+  }, [pagina]);
 
   useEffect(() => {
-
     if (PokemonUrl.length > 0) {
       Promise.all(
         PokemonUrl.map((pokemon) =>
@@ -35,21 +34,30 @@ const ListaPokemon = ({ buscarPoke }) => {
       )
         .then((data) => {
           if (pagina === 0) {
-            setListaPokemon(data);
+            setOriginalPokemonList(data)
+            setListaPokemon(data)
             setPokemonUrls([])
           } else {
-            setListaPokemon(prevPokemon => [...prevPokemon, ...data]);
+            setListaPokemon(prevPokemon => [...prevPokemon, ...data])
             setPokemonUrls([])
           }
         })
         .catch((error) => {
-          console.log(error);
+          throw error
         })
         .finally(() => {
           setCargando(true)
         })
     }
   }, [PokemonUrl, pagina])
+
+  useEffect(() => {
+    const listaFiltrada = buscarPoke
+      ? ListaPokemon.filter(pokemon => pokemon.name.includes(buscarPoke))
+      : OriginalPokemonList
+
+    setLisFiltrada(listaFiltrada)
+  }, [buscarPoke, OriginalPokemonList])
 
   function VerMas(id) {
     const objPokemon = ListaPokemon.filter(pokemon => pokemon.id === id)
@@ -61,11 +69,6 @@ const ListaPokemon = ({ buscarPoke }) => {
     setObj(false)
   }
 
-  const listaFiltrada = buscarPoke
-    ? ListaPokemon.filter(pokemon => pokemon.name.includes(buscarPoke))
-    : ListaPokemon;
-
-
   if (!Cargando) {
     return <h1>Cargando....</h1>
   }
@@ -73,7 +76,7 @@ const ListaPokemon = ({ buscarPoke }) => {
   return (
     <div>
       <main className="Main">
-        {listaFiltrada.map((mapeoPokemon) => {
+        {ListFiltrada.map((mapeoPokemon) => {
           const img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${mapeoPokemon.id}.png`
           return (
             <div className="container" key={mapeoPokemon.id}>
@@ -81,7 +84,7 @@ const ListaPokemon = ({ buscarPoke }) => {
                 <picture>
                   <img src={img} alt={mapeoPokemon.name} />
                 </picture>
-                <p className="Nombre">Nombre: {mapeoPokemon.name}</p>
+                <p className="Nombre">{mapeoPokemon.name}</p>
                 <button className="btnVerMas" onClick={() => VerMas(mapeoPokemon.id)}>Ver Mas</button>
               </div>
             </div>
@@ -89,7 +92,7 @@ const ListaPokemon = ({ buscarPoke }) => {
         })}
       </main>
       <div className="btnContainer">
-        {listaFiltrada.length > 0 
+        {ListFiltrada.length > 0 
           ? 
           <button className="BtnMas" onClick={() => setPagina(pagina + 21)}>Cargar Mas</button> 
           : 

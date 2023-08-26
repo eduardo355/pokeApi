@@ -90,6 +90,12 @@ img {
     cursor: pointer;
     font: inherit;
     font-weight: bold;
+    transition: background-color  1s ease;
+}
+
+.BtnMas:hover {
+    background-color: yellow;
+    color: black;
 }
 
 .btnVerMas {
@@ -99,8 +105,15 @@ img {
     color: yellow;
     margin-top: 5px;
     font-size: 17px;
+    font-weight: bold;
     border-radius: 7px;
     cursor: pointer;
+    transition: background-color  1s ease;
+}
+
+.btnVerMas:hover {
+    background-color: yellow;
+    color: black;
 }
 
 .sinResultado{

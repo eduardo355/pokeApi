@@ -32,7 +32,7 @@ const NavBar = ({ onBuscar }) => {
                     value={buscar}
                     onChange={handleChange} 
                 />
-                {buscar && <button className="btnBuscar" onClick={handleResetear}>restaurar</button>}
+                {buscar && <button className="btnRestaurar" onClick={handleResetear}>restaurar</button>}
             </div>
         </div>
     )
