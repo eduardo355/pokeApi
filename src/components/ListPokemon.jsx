@@ -5,9 +5,7 @@ import Modal from "./Modal";
 
 const ListaPokemon = ({ buscarPoke }) => {
   const [PokemonUrl, setPokemonUrls] = useState([])
-  const [OriginalPokemonList, setOriginalPokemonList] = useState([])
   const [ListaPokemon, setListaPokemon] = useState([])
-  const [ListFiltrada, setLisFiltrada] = useState([])
   const [Cargando, setCargando] = useState(null)
   const [pagina, setPagina] = useState(0)
   const [IdPokemon, setIdPokemon] = useState([])
@@ -34,7 +32,6 @@ const ListaPokemon = ({ buscarPoke }) => {
       )
         .then((data) => {
           if (pagina === 0) {
-            setOriginalPokemonList(data)
             setListaPokemon(data)
             setPokemonUrls([])
           } else {
@@ -51,16 +48,13 @@ const ListaPokemon = ({ buscarPoke }) => {
     }
   }, [PokemonUrl, pagina])
 
-  useEffect(() => {
     const listaFiltrada = buscarPoke
       ? ListaPokemon.filter(pokemon => pokemon.name.includes(buscarPoke))
-      : OriginalPokemonList
+      : ListaPokemon
 
-    setLisFiltrada(listaFiltrada)
-  }, [buscarPoke, OriginalPokemonList])
 
   function VerMas(id) {
-    const objPokemon = ListaPokemon.filter(pokemon => pokemon.id === id)
+    const objPokemon = listaFiltrada.filter(pokemon => pokemon.id === id)
     setIdPokemon(objPokemon)
     setObj(true)
   }
@@ -76,7 +70,7 @@ const ListaPokemon = ({ buscarPoke }) => {
   return (
     <div>
       <main className="Main">
-        {ListFiltrada.map((mapeoPokemon) => {
+        {listaFiltrada.map((mapeoPokemon) => {
           const img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${mapeoPokemon.id}.png`
           return (
             <div className="container" key={mapeoPokemon.id}>
@@ -92,7 +86,7 @@ const ListaPokemon = ({ buscarPoke }) => {
         })}
       </main>
       <div className="btnContainer">
-        {ListFiltrada.length > 0 
+        {listaFiltrada.length > 0 
           ? 
           <button className="BtnMas" onClick={() => setPagina(pagina + 21)}>Cargar Mas</button> 
           : 
