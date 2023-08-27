@@ -7,10 +7,13 @@ function App() {
   const [buscar, setBuscar] = useState('')
 
   return (
-    <div className="centrar">
-      <NavBar onBuscar={setBuscar} />
-      <ListaPokemon buscarPoke={buscar}/>
+    <div className="divColor">
+      <div className="centrar">
+        <NavBar onBuscar={setBuscar} />
+        <ListaPokemon buscarPoke={buscar}/>
+      </div>
     </div>
+
   )
 }
 

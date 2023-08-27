@@ -1,75 +1,70 @@
-import React, { useEffect, useState } from "react";
-import ObtenerUrlPokemon from "./urlPokemons";
+import React, { useEffect, useState } from "react"
+import ObtenerUrlPokemon from "../Function/urlPokemons"
+import PokemonGet from "../Function/PokemonGet"
 import '../css/EstilosListaPokemon.css'
-import Modal from "./Modal";
+import Modal from "./Modal"
 
 const ListaPokemon = ({ buscarPoke }) => {
   const [PokemonUrl, setPokemonUrls] = useState([])
   const [ListaPokemon, setListaPokemon] = useState([])
-  const [Cargando, setCargando] = useState(null)
-  const [pagina, setPagina] = useState(0)
   const [IdPokemon, setIdPokemon] = useState([])
-  const [obj, setObj] = useState(false)
-
+  const [Cargando, setCargando] = useState(true)
+  const [modalActivo, setModalActivo] = useState(false)
+  const [pagina, setPagina] = useState(0)
+  
   useEffect(() => {
     const FetchData = async () => {
       try {
-        const URLS = await ObtenerUrlPokemon(pagina);
-        setPokemonUrls(URLS);
+        const URLS = await ObtenerUrlPokemon(pagina)
+        setPokemonUrls(URLS)
       } catch (error) {
-        alert(error);
+        alert(error)
       }
     }
-    FetchData();
-  }, [pagina]);
+    FetchData()
+  }, [pagina])
 
   useEffect(() => {
-    if (PokemonUrl.length > 0) {
-      Promise.all(
-        PokemonUrl.map((pokemon) =>
-          fetch(pokemon).then((response) => response.json())
-        )
-      )
-        .then((data) => {
-          if (pagina === 0) {
-            setListaPokemon(data)
-            setPokemonUrls([])
-          } else {
-            setListaPokemon(prevPokemon => [...prevPokemon, ...data])
-            setPokemonUrls([])
-          }
-        })
-        .catch((error) => {
-          throw error
-        })
-        .finally(() => {
-          setCargando(true)
-        })
-    }
+    PokemonUrl.length > 0
+    ?
+      PokemonGet(PokemonUrl)
+      .then((data) => {
+        if (pagina === 0) {
+          setListaPokemon(data)
+          setPokemonUrls([])
+        } else {
+          setListaPokemon(prevPokemon => [...prevPokemon, ...data])
+          setPokemonUrls([])
+        }
+      })
+      .catch((error) => {
+        throw error
+      })
+      .finally(() => {
+        setCargando(false)
+      })
+    : console.log('Cargando')
   }, [PokemonUrl, pagina])
 
-    const listaFiltrada = buscarPoke
-      ? ListaPokemon.filter(pokemon => pokemon.name.includes(buscarPoke))
-      : ListaPokemon
+  const listaFiltrada = buscarPoke
+    ? ListaPokemon.filter(pokemon => pokemon.name.includes(buscarPoke))
+    : ListaPokemon
 
 
-  function VerMas(id) {
+  const VerMas = (id) => {
     const objPokemon = listaFiltrada.filter(pokemon => pokemon.id === id)
     setIdPokemon(objPokemon)
-    setObj(true)
+    setModalActivo(true)
   }
 
   const CloseModal = () => {
-    setObj(false)
-  }
-
-  if (!Cargando) {
-    return <h1>Cargando....</h1>
+    setModalActivo(false)
   }
 
   return (
     <div>
       <main className="Main">
+        {Cargando && <h1>Cargando....</h1>}
         {listaFiltrada.map((mapeoPokemon) => {
           const img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${mapeoPokemon.id}.png`
           return (
@@ -94,7 +89,7 @@ const ListaPokemon = ({ buscarPoke }) => {
         }
       </div>
 
-      {obj && <Modal IdPokemon={IdPokemon} onClose={CloseModal} />}
+      {modalActivo && <Modal IdPokemon={IdPokemon} onClose={CloseModal} />}
     </div>
   )
 }
