@@ -1,38 +1,32 @@
 import React, { useState } from "react";
-import '../css/NavBar.css'
+import { Global } from "../global/Global";
 
 
-
-const NavBar = ({ onBuscar }) => {
-    const [buscar, setBuscar] = useState('')
+const NavBar = () => {
+    const {busqueda, setBusqueda, busquedaReset } = Global()
 
     const handleChange = (e) => {
-        setBuscar(e.target.value)
-        onBuscar(buscar)
+        const valor = e.target.value
+        setBusqueda(valor)
     }
-
     const handleResetear = () => {
-        onBuscar()
-        setBuscar('')
+        busquedaReset()
     }
 
     return (
-        <div className="container-nav-bar">
-            <div className="tituloContainer">
-                <h1 className="Titulo">POKE-API</h1>
-            </div>
-
-            <div className="containerInput">
+        <div className=" flex p-4 items-center justify-between bg-red-500 max-sm:w-screen ">
+            <h1 className="text-4xl font-bold text-white max-sm:text-2xl">POKEDEX</h1>
+            <div className=" flex gap-4">
                 <input 
-                    className="Input" 
+                    className=" p-1 w-80 max-sm:w-40 focus:outline-none bg-transparent text-white border-b-2" 
                     type="text" 
                     placeholder="bulbasaur....." 
                     name="" 
                     id=""
-                    value={buscar}
+                    value={busqueda}
                     onChange={handleChange} 
                 />
-                {buscar && <button className="btnRestaurar" onClick={handleResetear}>restaurar</button>}
+                {busqueda && <button className=" text-white border p-1 font-bold hover:bg-red-800" onClick={handleResetear}>restaurar</button>}
             </div>
         </div>
     )
