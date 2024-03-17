@@ -7,7 +7,7 @@ const NavBar = () => {
 
     const handleChange = (e) => {
         const valor = e.target.value
-        setBusqueda(valor)
+        setBusqueda(valor.toLowerCase())
     }
     const handleResetear = () => {
         busquedaReset()

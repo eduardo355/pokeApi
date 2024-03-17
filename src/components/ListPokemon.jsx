@@ -7,10 +7,11 @@ const ListaPokemon = () => {
   const { busqueda } = Global()
   const [PokemonUrl, setPokemonUrls] = useState([])
   const [ListaPokemon, setListaPokemon] = useState([])
-  const [Cargando, setCargando] = useState(true)
+  const [Cargando, setCargando] = useState(false)
   const [pagina, setPagina] = useState(0)
 
   useEffect(() => {
+    setCargando(true)
     const FetchData = async () => {
       try {
         const URLS = await ObtenerUrlPokemon(pagina)
@@ -91,11 +92,11 @@ const ListaPokemon = () => {
         })}
       </article>
       <div className=" flex items-center justify-center">
-        {listaFiltrada.length > 0
+        {Cargando === true
           ?
-          <button className=" border mt-3 p-2 text-xl shadow-md font-bold " onClick={() => setPagina(pagina + 21)}>Cargar Mas</button>
+          <span className=" border mt-3 p-2 text-xl shadow-md font-bold ">Cargando...</span>
           :
-          ''
+          <button className=" border mt-3 p-2 text-xl shadow-md font-bold " onClick={() => setPagina(pagina + 21)}>Cargar Mas</button>
         }
       </div>
     </section>
