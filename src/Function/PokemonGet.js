@@ -1,10 +1,5 @@
-
-const PokemonGet = ( PokemonUrl ) => {
-    return Promise.all(
-        PokemonUrl.map(
-            (pokemon) => fetch(pokemon).then((response) => response.json())
-        )
-    )
+export const getPokemonData = (pokemonUrls) => {
+  return Promise.all(
+    pokemonUrls.map((url) => fetch(url).then((response) => response.json()))
+  )
 }
-
-export default PokemonGet
